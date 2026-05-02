@@ -31,7 +31,8 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Haptics from 'expo-haptics';
 import { useMutation } from '@tanstack/react-query';
 
-import Colors from '@/constants/colors';
+import { AppColors } from '@/constants/colors';
+import { useAppTheme } from '@/hooks/useAppTheme';
 import { cities } from '@/mocks/cities';
 import { City } from '@/constants/types';
 import { analyzeMetalImage, MetalAnalysisResult } from '@/services/openai';
@@ -74,6 +75,8 @@ function formatCurrency(value: number): string {
 }
 
 export default function EstimateScreen() {
+  const { colors: Colors } = useAppTheme();
+  const styles = useMemo(() => createStyles(Colors), [Colors]);
   const [selectedCityId, setSelectedCityId] = useState<string | null>(null);
   const [cityModalVisible, setCityModalVisible] = useState<boolean>(false);
   const [imageUri, setImageUri] = useState<string | null>(null);
@@ -565,7 +568,7 @@ export default function EstimateScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (Colors: AppColors) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.bg,

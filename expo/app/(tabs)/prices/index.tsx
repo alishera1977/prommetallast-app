@@ -20,7 +20,8 @@ import {
 } from 'lucide-react-native';
 import * as Haptics from 'expo-haptics';
 
-import Colors from '@/constants/colors';
+import { AppColors } from '@/constants/colors';
+import { useAppTheme } from '@/hooks/useAppTheme';
 import { City } from '@/constants/types';
 import { cities } from '@/mocks/cities';
 import { metalCategories } from '@/mocks/metals';
@@ -48,6 +49,8 @@ function groupCitiesByRegion(allCities: City[]): CityGroup[] {
 }
 
 export default function PricesScreen() {
+  const { colors: Colors } = useAppTheme();
+  const styles = useMemo(() => createStyles(Colors), [Colors]);
   const [activeFilter, setActiveFilter] = useState<CategoryFilter>('all');
   const [selectedCityId, setSelectedCityId] = useState<string>('1');
   const [cityModalVisible, setCityModalVisible] = useState<boolean>(false);
@@ -366,7 +369,7 @@ export default function PricesScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (Colors: AppColors) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.bg,
@@ -472,7 +475,7 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.border,
   },
   tableRowEven: {
-    backgroundColor: 'rgba(22, 25, 32, 0.5)',
+    backgroundColor: Colors.bgCard,
   },
   tableRowLast: {
     borderBottomWidth: 0,

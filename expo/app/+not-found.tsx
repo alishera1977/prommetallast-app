@@ -1,9 +1,13 @@
 import { Link, Stack } from 'expo-router';
+import React, { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import Colors from '@/constants/colors';
+import { AppColors } from '@/constants/colors';
+import { useAppTheme } from '@/hooks/useAppTheme';
 
 export default function NotFoundScreen() {
+  const { colors: Colors } = useAppTheme();
+  const styles = useMemo(() => createStyles(Colors), [Colors]);
   return (
     <>
       <Stack.Screen options={{ title: 'Не найдено' }} />
@@ -19,7 +23,7 @@ export default function NotFoundScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (Colors: AppColors) => StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',

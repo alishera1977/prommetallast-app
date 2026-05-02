@@ -5,13 +5,15 @@ import React, { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 
-import Colors from '@/constants/colors';
+import { useAppTheme, AppThemeProvider } from '@/hooks/useAppTheme';
 
 void SplashScreen.preventAutoHideAsync();
 
 const queryClient = new QueryClient();
 
 function RootLayoutNav() {
+  const { colors: Colors } = useAppTheme();
+
   return (
     <Stack
       screenOptions={{
@@ -27,6 +29,17 @@ function RootLayoutNav() {
   );
 }
 
+function ThemedApp() {
+  const { themeMode } = useAppTheme();
+
+  return (
+    <>
+      <StatusBar style={themeMode === 'light' ? 'dark' : 'light'} />
+      <RootLayoutNav />
+    </>
+  );
+}
+
 export default function RootLayout() {
   useEffect(() => {
     void SplashScreen.hideAsync();
@@ -35,8 +48,9 @@ export default function RootLayout() {
   return (
     <QueryClientProvider client={queryClient}>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <StatusBar style="light" />
-        <RootLayoutNav />
+        <AppThemeProvider>
+          <ThemedApp />
+        </AppThemeProvider>
       </GestureHandlerRootView>
     </QueryClientProvider>
   );

@@ -3,9 +3,11 @@ import { Home, ListOrdered, Truck, MapPin, Menu, ScanSearch } from 'lucide-react
 import React from 'react';
 import { Platform } from 'react-native';
 
-import Colors from '@/constants/colors';
+import { useAppTheme } from '@/hooks/useAppTheme';
 
 export default function TabLayout() {
+  const { colors: Colors } = useAppTheme();
+
   return (
     <Tabs
       screenOptions={{

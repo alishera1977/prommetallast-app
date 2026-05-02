@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
   View,
   Text,
@@ -21,11 +21,14 @@ import {
 import * as Haptics from 'expo-haptics';
 import { useQuery } from '@tanstack/react-query';
 
-import Colors from '@/constants/colors';
+import { AppColors } from '@/constants/colors';
+import { useAppTheme } from '@/hooks/useAppTheme';
 import { fetchLocations } from '@/services/api';
 import { ReceptionPoint } from '@/constants/types';
 
 export default function LocationsScreen() {
+  const { colors: Colors } = useAppTheme();
+  const styles = useMemo(() => createStyles(Colors), [Colors]);
   const locationsQuery = useQuery({
     queryKey: ['locations'],
     queryFn: fetchLocations,
@@ -171,7 +174,7 @@ export default function LocationsScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (Colors: AppColors) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.bg,

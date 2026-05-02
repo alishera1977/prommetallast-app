@@ -1,9 +1,11 @@
 import { Stack } from 'expo-router';
 import React from 'react';
 
-import Colors from '@/constants/colors';
+import { useAppTheme } from '@/hooks/useAppTheme';
 
 export default function LocationsLayout() {
+  const { colors: Colors } = useAppTheme();
+
   return (
     <Stack
       screenOptions={{

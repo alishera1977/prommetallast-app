@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import {
   View,
   Text,
@@ -21,14 +21,19 @@ import {
   Info,
   ChevronDown,
   ChevronUp,
+  Moon,
+  Sun,
 } from 'lucide-react-native';
 import * as Haptics from 'expo-haptics';
 import { useQuery } from '@tanstack/react-query';
 
-import Colors from '@/constants/colors';
+import { AppColors } from '@/constants/colors';
+import { useAppTheme } from '@/hooks/useAppTheme';
 import { fetchVacancies, fetchSettings } from '@/services/api';
 
 export default function MoreScreen() {
+  const { colors: Colors, themeMode, setThemeMode } = useAppTheme();
+  const styles = useMemo(() => createStyles(Colors), [Colors]);
   const [expandedVacancy, setExpandedVacancy] = useState<string | null>(null);
 
   const vacanciesQuery = useQuery({
@@ -67,6 +72,13 @@ export default function MoreScreen() {
     vacanciesQuery.refetch();
     settingsQuery.refetch();
   }, [vacanciesQuery, settingsQuery]);
+
+  const handleThemeSelect = useCallback((mode: 'dark' | 'light') => {
+    if (Platform.OS !== 'web') {
+      void Haptics.selectionAsync();
+    }
+    setThemeMode(mode);
+  }, [setThemeMode]);
 
   const isRefreshing = vacanciesQuery.isRefetching || settingsQuery.isRefetching;
 
@@ -212,6 +224,35 @@ export default function MoreScreen() {
         )}
 
         <View style={styles.sectionLabel}>
+          <Text style={styles.sectionTitle}>Оформление</Text>
+        </View>
+
+        <View style={styles.themeCard}>
+          <TouchableOpacity
+            style={[styles.themeOption, themeMode === 'dark' && styles.themeOptionActive]}
+            onPress={() => handleThemeSelect('dark')}
+            activeOpacity={0.75}
+            testID="theme-dark"
+          >
+            <Moon size={18} color={themeMode === 'dark' ? Colors.primary : Colors.textSecondary} />
+            <Text style={[styles.themeOptionText, themeMode === 'dark' && styles.themeOptionTextActive]}>
+              Тёмная
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.themeOption, themeMode === 'light' && styles.themeOptionActive]}
+            onPress={() => handleThemeSelect('light')}
+            activeOpacity={0.75}
+            testID="theme-light"
+          >
+            <Sun size={18} color={themeMode === 'light' ? Colors.primary : Colors.textSecondary} />
+            <Text style={[styles.themeOptionText, themeMode === 'light' && styles.themeOptionTextActive]}>
+              Светлая
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.sectionLabel}>
           <Text style={styles.sectionTitle}>Информация</Text>
         </View>
 
@@ -251,7 +292,7 @@ export default function MoreScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (Colors: AppColors) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.bg,
@@ -330,6 +371,39 @@ const styles = StyleSheet.create({
   vacancyBadgeText: {
     fontSize: 12,
     fontWeight: '700' as const,
+    color: Colors.primary,
+  },
+  themeCard: {
+    flexDirection: 'row',
+    backgroundColor: Colors.bgCard,
+    borderRadius: 14,
+    padding: 6,
+    marginBottom: 8,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    gap: 6,
+  },
+  themeOption: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    paddingVertical: 12,
+    borderRadius: 10,
+    backgroundColor: Colors.bgCard,
+  },
+  themeOptionActive: {
+    backgroundColor: Colors.primaryBg,
+    borderWidth: 1,
+    borderColor: Colors.primary,
+  },
+  themeOptionText: {
+    fontSize: 14,
+    fontWeight: '700' as const,
+    color: Colors.textSecondary,
+  },
+  themeOptionTextActive: {
     color: Colors.primary,
   },
   menuItem: {

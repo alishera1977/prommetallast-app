@@ -26,12 +26,15 @@ import {
 import * as Haptics from 'expo-haptics';
 import { useQuery, useMutation } from '@tanstack/react-query';
 
-import Colors from '@/constants/colors';
+import { AppColors } from '@/constants/colors';
+import { useAppTheme } from '@/hooks/useAppTheme';
 import { fetchLocations, submitRequest } from '@/services/api';
 import { PickupRequest } from '@/constants/types';
 import { useMetalsByCity } from '@/hooks/useMetals';
 
 export default function RequestScreen() {
+  const { colors: Colors } = useAppTheme();
+  const styles = useMemo(() => createStyles(Colors), [Colors]);
   const [name, setName] = useState<string>('');
   const [phone, setPhone] = useState<string>('');
   const [selectedCity, setSelectedCity] = useState<string>('');
@@ -356,7 +359,7 @@ export default function RequestScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (Colors: AppColors) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.bg,
