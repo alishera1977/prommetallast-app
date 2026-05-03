@@ -129,7 +129,7 @@ export default function HomeScreen() {
           </View>
 
           <LinearGradient
-            colors={['#E5393520', '#E5393508', 'transparent']}
+            colors={['#D92D2020', '#D92D2008', 'transparent']}
             style={styles.heroBanner}
           >
             <View style={styles.heroContent}>
@@ -524,7 +524,7 @@ const createStyles = (Colors: AppColors) => StyleSheet.create({
     borderRadius: 16,
     padding: 16,
     borderWidth: 1,
-    borderColor: '#E5393530',
+    borderColor: '#D92D2030',
     gap: 12,
   },
   infoIcon: {

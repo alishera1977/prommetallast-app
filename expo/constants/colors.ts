@@ -8,10 +8,10 @@ export const darkColors = {
   border: '#262B36',
   borderLight: '#2F3542',
 
-  primary: '#E53935',
-  primaryDark: '#C62828',
-  primaryLight: '#EF5350',
-  primaryBg: 'rgba(229, 57, 53, 0.1)',
+  primary: '#D92D20',
+  primaryDark: '#B42318',
+  primaryLight: '#F04438',
+  primaryBg: 'rgba(217, 45, 32, 0.1)',
 
   accent: '#3B82F6',
   accentBg: 'rgba(59, 130, 246, 0.1)',
@@ -49,7 +49,7 @@ export const lightColors = {
   bgInput: '#FFFFFF',
   border: '#DFE3EA',
   borderLight: '#CBD2DD',
-  primaryBg: 'rgba(229, 57, 53, 0.09)',
+  primaryBg: 'rgba(217, 45, 32, 0.09)',
   accentBg: 'rgba(59, 130, 246, 0.09)',
   successBg: 'rgba(34, 197, 94, 0.09)',
   dangerBg: 'rgba(239, 68, 68, 0.09)',
