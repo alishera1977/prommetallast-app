@@ -57,6 +57,25 @@ function pmp_get_all_cities_flat() {
     return $cities;
 }
 
+function pmp_get_city_request_emails() {
+    return [
+        '1' => 'terra-barnaul@mail.ru', // Барнаул
+        '2' => 'terra-barnaul@mail.ru', // Рубцовск
+        '3' => 'terra-barnaul@mail.ru', // Заринск
+        '4' => 'terra-barnaul@mail.ru', // Алейск
+        '5' => 'terra-barnaul@mail.ru', // Новоалтайск
+        '6' => 'terra-barnaul@mail.ru', // Поспелиха
+        '7' => 'terra-barnaul@mail.ru', // Искитим
+        '8' => 'Avion.54@mail.ru',      // Новосибирск (Главный)
+        '9' => 'Avion.54@mail.ru',      // Новосибирск
+    ];
+}
+
+function pmp_get_request_email_by_city($city_id) {
+    $emails = pmp_get_city_request_emails();
+    return $emails[$city_id] ?? get_option('admin_email');
+}
+
 // =============================================
 // 1. РЕГИСТРАЦИЯ КАСТОМНЫХ ТИПОВ ЗАПИСЕЙ
 // =============================================
@@ -532,10 +551,14 @@ function pmp_api_create_request($request) {
     update_post_meta($post_id, '_pmp_req_address', $address);
     update_post_meta($post_id, '_pmp_req_comment', $comment);
 
-    $admin_email = get_option('admin_email');
+    $city_email = pmp_get_request_email_by_city($city);
+    update_post_meta($post_id, '_pmp_req_email_to', $city_email);
+
+    $cities = pmp_get_all_cities_flat();
+    $city_label = $cities[$city]['label'] ?? $city;
     $subject = 'Новая заявка из приложения: ' . $name;
-    $body = "Имя: $name\nТелефон: $phone\nГород: $city\nМеталл: $metal\nВес: $weight кг\nАдрес: $address\nКомментарий: $comment";
-    wp_mail($admin_email, $subject, $body);
+    $body = "Имя: $name\nТелефон: $phone\nГород: $city_label\nМеталл: $metal\nВес: $weight кг\nАдрес: $address\nКомментарий: $comment";
+    wp_mail($city_email, $subject, $body);
 
     return rest_ensure_response([
         'success' => true,
