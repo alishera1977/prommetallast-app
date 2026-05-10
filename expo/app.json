@@ -1,11 +1,11 @@
 {
   "expo": {
     "name": "Промметпласт",
-    "slug": "ios-app-redesign-guide",
+    "slug": "prommetplast",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "rork-app",
+    "scheme": "prommetplast",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
@@ -15,14 +15,18 @@
     },
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "app.rork.ios-app-redesign-guide"
+      "bundleIdentifier": "ru.prommetplast.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Камера нужна, чтобы сфотографировать металлолом для предварительной оценки.",
+        "NSPhotoLibraryUsageDescription": "Доступ к фото нужен, чтобы выбрать изображение металлолома для предварительной оценки."
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "app.rork.ios_app_redesign_guide"
+      "package": "ru.prommetplast.app"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
