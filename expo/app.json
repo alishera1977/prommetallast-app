@@ -15,7 +15,7 @@
     },
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "ru.prommetplast.app",
+      "bundleIdentifier": "com.prommetplast.mobile",
       "infoPlist": {
         "NSCameraUsageDescription": "Камера нужна, чтобы сфотографировать металлолом для предварительной оценки.",
         "NSPhotoLibraryUsageDescription": "Доступ к фото нужен, чтобы выбрать изображение металлолома для предварительной оценки."
